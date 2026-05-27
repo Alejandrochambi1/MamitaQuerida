@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Emeralda López | Flores y Corazón</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            background: linear-gradient(145deg, #fff0f5 0%, #ffe0e8 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .main-container {
+            max-width: 650px;
+            width: 100%;
+            margin: auto;
+        }
+
+        /* Tarjeta principal - estilo rosado elegante */
+        .card {
+            background: rgba(255, 250, 252, 0.94);
+            backdrop-filter: blur(12px);
+            border-radius: 64px;
+            padding: 2rem 1.8rem;
+            box-shadow: 0 30px 45px -15px rgba(199, 70, 120, 0.3);
+            text-align: center;
+            border: 1px solid rgba(255, 182, 193, 0.7);
+            position: relative;
+        }
+
+        /* Botón de música */
+        .music-control {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 105, 150, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid #ffb6c1;
+            border-radius: 50px;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            z-index: 15;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+        }
+        .music-control:active { transform: scale(0.96); background: #ff69b4; }
+
+        /* Grid de 4 fotos familiares */
+        .photos-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.8rem;
+        }
+        .photo-item {
+            background: #fff5f8;
+            border-radius: 28px;
+            padding: 0.5rem;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+            border: 2px solid #ffb6c1;
+        }
+        .photo-item:active { transform: scale(0.98);}
+        .photo-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 24px;
+            display: block;
+        }
+        .photo-caption {
+            font-size: 0.7rem;
+            color: #c4506e;
+            margin-top: 6px;
+            font-weight: 600;
+        }
+
+        .greeting-badge {
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            background: #ffb6c1;
+            display: inline-block;
+            padding: 0.3rem 1.2rem;
+            border-radius: 50px;
+            color: #a1314f;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            background: linear-gradient(135deg, #d43f6b, #ff89a6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin: 0.5rem 0 0.2rem;
+        }
+
+        .subname {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #c93a5e;
+            margin-bottom: 1rem;
+            border-bottom: 2px dashed #ffb6c1;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .profesion {
+            background: #ffeff2;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #c93a5e;
+            margin-bottom: 1rem;
+        }
+
+        /* Mensaje sentimental (sin rimas, texto solicitado) */
+        .mensaje-sentimental {
+            background: rgba(255, 240, 245, 0.95);
+            padding: 1.8rem;
+            border-radius: 48px;
+            font-size: 0.98rem;
+            line-height: 1.75;
+            color: #4a2533;
+            font-weight: 500;
+            margin: 1rem 0;
+            border: 1px solid #ffd0dc;
+            text-align: left;
+            box-shadow: 0 8px 20px rgba(199, 70, 120, 0.1);
+        }
+        
+        .mensaje-sentimental p {
+            margin-bottom: 1rem;
+        }
+        
+        .mensaje-sentimental .firma {
+            margin-top: 1.2rem;
+            font-style: italic;
+            color: #c93a5e;
+            text-align: right;
+            font-size: 1rem;
+        }
+
+        .btn-principal {
+            background: linear-gradient(95deg, #ff6b8b, #ff9eb5);
+            border: none;
+            padding: 14px 28px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 8px 18px rgba(255, 105, 150, 0.4);
+            margin: 16px 0 8px;
+            width: 100%;
+            font-family: inherit;
+        }
+        .btn-principal:active { transform: scale(0.96);}
+
+        /* === CUADRO DE FLORES MÁGICAS === */
+        .magic-flower-box {
+            display: none;
+            margin-top: 24px;
+            background: linear-gradient(135deg, #fff9fb, #ffeff2);
+            border-radius: 48px;
+            padding: 1.2rem;
+            border: 3px solid #ffb6c1;
+            box-shadow: 0 15px 35px rgba(199, 70, 120, 0.2);
+            position: relative;
+            animation: boxAppear 0.6s ease;
+        }
+        
+        .magic-flower-box::before {
+            content: "🌸 🌺 🌷 💮 🌼 🌸";
+            position: absolute;
+            top: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+            background: #fff9fb;
+            padding: 0 15px;
+            border-radius: 50px;
+            white-space: nowrap;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .magic-flower-box::after {
+            content: "🌻 🌸 🌺 🌷 💐 🌼";
+            position: absolute;
+            bottom: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.4rem;
+            background: #fff9fb;
+            padding: 0 12px;
+            border-radius: 50px;
+            white-space: nowrap;
+        }
+
+        .flower-canvas-container {
+            width: 100%;
+            height: 260px;
+            border-radius: 36px;
+            background: rgba(255, 235, 240, 0.6);
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 0 2px rgba(255, 182, 193, 0.6);
+        }
+        
+        #flowerCanvasInside {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border-radius: 36px;
+        }
+
+        .box-message {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .box-message h3 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6rem;
+            color: #c93a5e;
+            margin-bottom: 6px;
+        }
+        .box-message p {
+            color: #a1314f;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+        
+        .close-box-btn {
+            background: rgba(255, 105, 150, 0.15);
+            border: 1px solid #ffb6c1;
+            color: #c93a5e;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: 0.2s;
+        }
+        .close-box-btn:active { background: rgba(255,105,150,0.3);}
+
+        @keyframes boxAppear {
+            from { opacity: 0; transform: scale(0.9) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .paw-signature {
+            margin-top: 16px;
+            font-size: 0.7rem;
+            color: #b85c76;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            font-weight: 500;
+        }
+
+        /* Responsivo para celulares */
+        @media (max-width: 550px) {
+            .card { padding: 1.5rem; }
+            h1 { font-size: 2.4rem; }
+            .photos-grid { gap: 0.75rem; }
+            .photo-item img { height: 110px; }
+            .flower-canvas-container { height: 200px; }
+            .magic-flower-box::before { font-size: 1.1rem; top: -18px; }
+            .magic-flower-box::after { font-size: 1rem; bottom: -16px; }
+            .music-control { top: 12px; right: 12px; padding: 5px 12px; font-size: 0.7rem; }
+            .mensaje-sentimental { padding: 1.2rem; font-size: 0.9rem; }
+        }
+        
+        @media (max-width: 420px) {
+            .photo-caption { font-size: 0.6rem; }
+            .greeting-badge { font-size: 0.7rem; }
+            h1 { font-size: 2rem; }
+            .subname { font-size: 1rem; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="main-container">
+    <div class="card">
+        <!-- Botón de control de música -->
+        <div class="music-control" id="musicToggleBtn">
+            <span>🎵</span> <span id="musicStatus">Pausar</span>
+        </div>
+
+        <!-- 4 imágenes familiares -->
+        <div class="photos-grid">
+            <div class="photo-item">
+                <img id="motherDaughterImg" src="https://png.pngtree.com/png-vector/20250805/ourmid/pngtree-watercolor-illustration-of-mother-and-daughter-embrace-with-floral-elements-png-image_16847076.webp" 
+                     alt="Madre e hija" 
+                     onerror="this.onerror=null; this.src='https://images.pexels.com/photos/3768146/pexels-photo-3768146.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2';">
+                <div class="photo-caption">Melany y Mamá 💕</div>
+            </div>
+            <div class="photo-item">
+                <img src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2" alt="Familia unida">
+                <div class="photo-caption">Familia y hermanas</div>
+            </div>
+            <div class="photo-item">
+                <img src="https://images.pexels.com/photos/5669602/pexels-photo-5669602.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2" alt="Mujer trabajadora">
+                <div class="photo-caption">Mujer trabajadora</div>
+            </div>
+            <div class="photo-item">
+                <img id="catsImg" src="https://i.wpfc.ml/en/rje873.png" 
+                     alt="Gatitos Tequila y Ron"
+                     onerror="this.onerror=null; this.src='https://images.pexels.com/photos/617278/pexels-photo-617278.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2';">
+                <div class="photo-caption">Tequila 🤍 Ron</div>
+            </div>
+        </div>
+
+        <div class="greeting-badge">🌷 PARA MI MAMÁ EMERALDA 🌷</div>
+        <h1>Emeralda López</h1>
+        <div class="subname">❤️ Madre, Contadora y Guía ❤️</div>
+        <div class="profesion">Contadora Pública | Corazón de familia</div>
+        
+        <!-- MENSAJE SENTIMENTAL (sin rimas, texto personalizado) -->
+        <div class="mensaje-sentimental">
+            <p><strong>Para mi mamá, Emeralda</strong></p>
+            <p>Mamá, solo quiero agradecerte por todo lo que haces por nosotros y por tu amor incondicional.</p>
+            <p>Eres una mujer increíble; admiro mucho lo inteligente que eres con los números y lo buena que eres escuchando cuando más te necesitamos.</p>
+            <p>Gracias por el hogar tan bonito y tranquilo que has formado junto a mis tías.</p>
+            <p>Tequila y Ron siempre te buscan para sus mimos. Te quiero y te amo muchísimo y yo no podría estar más orgullosa de ser tu hija.</p>
+            <p>Eres el pilar que nos mantiene unidos y lo más importante que tenemos. ¡Te quiero mucho! 💕</p>
+            <div class="firma">— Melany, tu hija</div>
+        </div>
+        
+        <button class="btn-principal" id="openMagicBoxBtn">🌸 PRESIONAME, MAMÁ EMERALDA 🌸</button>
+        
+        <!-- CUADRO DE FLORES MÁGICAS -->
+        <div id="magicBox" class="magic-flower-box">
+            <div class="flower-canvas-container">
+                <canvas id="flowerCanvasInside"></canvas>
+            </div>
+            <div class="box-message">
+                <h3>💖 Flores para ti 💖</h3>
+                <p>Conté cada latido de mi corazón,<br>
+                y los convertí en flores, con toda mi pasión.<br>
+                Tequila y Ron también quieren bailar,<br>
+                porque mamá Emeralda, ¡eres única al soñar!</p>
+            </div>
+            <button class="close-box-btn" id="closeBoxBtn">🌷 Cerrar jardín 🌷</button>
+        </div>
+        
+        <div class="paw-signature">
+            <span>🐾 Melany (hija)</span>
+            <span>🐱 Tequila (hermana gatita)</span>
+            <span>🐈 Ron (nieto gatito)</span>
+        </div>
+        <div style="margin-top: 12px; font-size: 0.7rem; opacity: 0.7;">✨ Toca el botón y mira flores mágicas dentro del cuadro ✨</div>
+    </div>
+</div>
+
+<!-- Audio con la misma música -->
+<audio id="bgMusic" loop preload="auto">
+    <source src="https://www.image2url.com/r2/default/audio/1779825538397-7feadf5a-be58-4f93-9b95-2c6156a3030d.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Shaders para las flores DENTRO del cuadro -->
+<script type="x-shader/x-vertex" id="vertexShader">
+    varying vec2 vUv;
+    void main() {
+        vUv = uv;
+        gl_Position = vec4(position, 1.0);
+    }
+</script>
+
+<script type="x-shader/x-fragment" id="fragmentShader">
+    uniform float u_ratio;
+    uniform vec2 u_point;
+    uniform float u_time;
+    uniform float u_stop_time;
+    uniform vec3 u_stop_randomizer;
+    uniform sampler2D u_texture;
+    uniform vec3 u_background_color;
+
+    varying vec2 vUv;
+
+    #define PI 3.14159265359
+
+    vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+    vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+    vec3 permute(vec3 x) { return mod289(((x * 34.0) + 1.0) * x); }
+    float snoise(vec2 v) {
+        const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
+        vec2 i = floor(v + dot(v, C.yy));
+        vec2 x0 = v - i + dot(i, C.xx);
+        vec2 i1;
+        i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+        vec4 x12 = x0.xyxy + C.xxzz;
+        x12.xy -= i1;
+        i = mod289(i);
+        vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0)) + i.x + vec3(0.0, i1.x, 1.0));
+        vec3 m = max(0.5 - vec3(dot(x0, x0), dot(x12.xy, x12.xy), dot(x12.zw, x12.zw)), 0.0);
+        m = m * m;
+        m = m * m;
+        vec3 x = 2.0 * fract(p * C.www) - 1.0;
+        vec3 h = abs(x) - 0.5;
+        vec3 ox = floor(x + 0.5);
+        vec3 a0 = x - ox;
+        m *= 1.79284291400159 - 0.85373472095314 * (a0 * a0 + h * h);
+        vec3 g;
+        g.x = a0.x * x0.x + h.x * x0.y;
+        g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+        return 130.0 * dot(m, g);
+    }
+
+    float get_dot_shape(vec2 dist, float radius_max, float radius_line) {
+        return 1. - smoothstep(radius_line * radius_max, radius_max, dot(dist, dist) * 4.0);
+    }
+
+    float get_stem_shape(vec2 _cursor, vec2 _uv, float _t, float _size, float _flowery, vec2 _rand) {
+        float stroke_width = .012;
+        float noise_power = 0.25;
+        float cursor_horizontal_noise = noise_power * (1. + (1. - _flowery)) * snoise(3. * _uv * (_rand - .5));
+        cursor_horizontal_noise *= pow(dot(_cursor.y, _cursor.y), .3 * _flowery);
+        cursor_horizontal_noise *= pow(dot(_uv.y, _uv.y), .3);
+        _cursor.x += cursor_horizontal_noise;
+        _cursor.y *= (1. - ((1. - _flowery) * .7));
+        _cursor.y += ((1. - _flowery) * .7 * _rand.x);
+        stroke_width = (1. - _flowery) * .9 * pow(dot(_uv.y, _cursor.x), 1.) + _flowery * .04;
+        stroke_width -= .02;
+        float left = smoothstep(-stroke_width, 0., _cursor.x);
+        float right = smoothstep(stroke_width, 0., _cursor.x);
+        float stem_shape = left * right;
+        float stem_top_mask = smoothstep(_cursor.y - .1, _cursor.y, min(-.1, _t - 1.));
+        stem_shape *= stem_top_mask;
+        stem_shape += 0.55 * get_dot_shape(_cursor + vec2(0., .02), .15 * _size, .5);
+        stem_shape *= stem_top_mask;
+        return stem_shape;
+    }
+
+    void main() {
+        float speed = 1.5;
+        float t = speed * u_stop_time;
+        vec2 uv = vUv;
+        uv += 0.00008 * snoise(vUv * 6.0 + vec2(0.0, 15.0 * cos(0.1 * u_time)));
+        uv.y += 0.00005;
+        vec3 color = texture2D(u_texture, uv).xyz;
+        color += 0.003 * u_background_color;
+        vec2 cursor = uv - u_point.xy;
+        cursor.x *= u_ratio;
+        float base_radius = .03 + .22 * u_stop_randomizer.y;
+        float grow_duration = .62;
+        float grow_speed = 2.2 * speed;
+        float bloom_duration = .32 * u_stop_randomizer.y;
+        float is_open = step(.1, base_radius);
+
+        if (t < grow_duration) {
+            vec3 stem_color = u_background_color - normalize(vec3(.35, .55, .12));
+            float stem_shape = get_stem_shape(cursor, uv, grow_speed * t, base_radius, 1., u_stop_randomizer.xy);
+            stem_shape += get_stem_shape(cursor, uv, grow_speed * t, 0., 0., u_stop_randomizer.yz);
+            stem_shape += get_stem_shape(cursor, uv, grow_speed * t, 0., 0., u_stop_randomizer.zy);
+            vec3 stem = stem_shape * stem_color;
+            color -= stem;
+        }
+
+        if (t < grow_duration + is_open * bloom_duration) {
+            float blooming_time = max(0., pow(1.15 * t, 2.) - .04);
+            float radius = base_radius * blooming_time;
+            vec2 noisy_cursor = vUv - u_point.xy;
+            noisy_cursor.x *= u_ratio;
+            noisy_cursor.y *= (1. + u_stop_randomizer.y * is_open);
+            noisy_cursor -= .025 * snoise(noisy_cursor * 12. + vec2(0., 12. * sin(.6 * t + PI)));
+            
+            vec3 flower_color = u_background_color;
+            flower_color -= normalize(vec3(0.8 + 0.3*sin(2.8*u_time), 0.2 + 0.5*cos(u_time*1.5), 0.6 + 0.4*sin(2.2*u_time + 1.8)));
+            color -= 0.65 * get_dot_shape(noisy_cursor, 1.7 * radius, .0) * flower_color;
+            color = 0.68 * color + 0.32 * mix(u_background_color, color, 1. - get_dot_shape(noisy_cursor, radius, 0.));
+            
+            noisy_cursor.y -= .025;
+            float inner_r = .7 * radius;
+            float inner_w = .22 * radius;
+            float ring_shape = get_dot_shape(noisy_cursor, inner_r + inner_w, .9) - get_dot_shape(noisy_cursor, inner_r, .9);
+            color += 0.28 * blooming_time * ring_shape * step(.1, base_radius);
+            
+            inner_r = .38 * radius;
+            inner_w = .12 * radius;
+            ring_shape = get_dot_shape(noisy_cursor, inner_r + inner_w, .9) - get_dot_shape(noisy_cursor, inner_r, .9);
+            color += 0.14 * pow(t, 0.6) * ring_shape * step(.1, base_radius);
+            
+            vec2 low_noise_cursor = vUv - u_point.xy;
+            low_noise_cursor.x *= 0.55 * u_ratio;
+            low_noise_cursor.y += 0.025;
+            low_noise_cursor += 0.015 * snoise(low_noise_cursor * 11. + t);
+            color -= is_open * pow(t, 5.2) * get_dot_shape(low_noise_cursor, .015 * radius, 0.);
+        }
+        gl_FragColor = vec4(color, 1.0);
+    }
+</script>
+
+<script type="importmap">
+    { "imports": { "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.151.0/three.module.js" } }
+</script>
+
+<script type="module">
+    import * as THREE from 'three';
+
+    // Elementos
+    const openBtn = document.getElementById('openMagicBoxBtn');
+    const magicBox = document.getElementById('magicBox');
+    const closeBoxBtn = document.getElementById('closeBoxBtn');
+    const flowerCanvas = document.getElementById('flowerCanvasInside');
+    const audio = document.getElementById('bgMusic');
+    const musicToggleBtn = document.getElementById('musicToggleBtn');
+    const musicStatusSpan = document.getElementById('musicStatus');
+    
+    // Control de música
+    let isMusicPlaying = false;
+    let musicStarted = false;
+    
+    function startMusic() {
+        if (!musicStarted) {
+            audio.volume = 0.55;
+            audio.play().then(() => {
+                isMusicPlaying = true;
+                musicStarted = true;
+                musicStatusSpan.innerText = 'Pausar';
+            }).catch(e => console.log("autoplay bloqueado"));
+        }
+    }
+    
+    function toggleMusic() {
+        if (!musicStarted) {
+            startMusic();
+            return;
+        }
+        if (isMusicPlaying) {
+            audio.pause();
+            isMusicPlaying = false;
+            musicStatusSpan.innerText = 'Reanudar';
+        } else {
+            audio.play().catch(e => console.log);
+            isMusicPlaying = true;
+            musicStatusSpan.innerText = 'Pausar';
+        }
+    }
+    
+    musicToggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleMusic();
+    });
+    
+    openBtn.addEventListener('click', () => {
+        if (!musicStarted) startMusic();
+    });
+    
+    // === WEBGL FLORES DENTRO DEL CUADRO ===
+    magicBox.style.display = 'none';
+    
+    let renderer, shaderScene, mainScene, renderTargets, camera, clock;
+    let basicMaterial, shaderMaterial;
+    let pointer = { x: 0.5, y: 0.5, clicked: true };
+    let isRendering = true;
+    let isStart = true;
+    let flowerInterval = null;
+    const backgroundColor = new THREE.Color(0xfffaf0);
+    
+    function initFlowerBox() {
+        const width = flowerCanvas.clientWidth;
+        const height = flowerCanvas.clientHeight;
+        
+        renderer = new THREE.WebGLRenderer({ canvas: flowerCanvas, alpha: true });
+        renderer.setSize(width, height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        
+        shaderScene = new THREE.Scene();
+        mainScene = new THREE.Scene();
+        camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+        clock = new THREE.Clock();
+        
+        renderTargets = [
+            new THREE.WebGLRenderTarget(width, height),
+            new THREE.WebGLRenderTarget(width, height),
+        ];
+        
+        const planeGeometry = new THREE.PlaneGeometry(2, 2);
+        const vertexText = document.getElementById('vertexShader').textContent;
+        const fragText = document.getElementById('fragmentShader').textContent;
+        
+        shaderMaterial = new THREE.ShaderMaterial({
+            uniforms: {
+                u_ratio: { value: width / height },
+                u_point: { value: new THREE.Vector2(pointer.x, pointer.y) },
+                u_time: { value: 0 },
+                u_stop_time: { value: 0 },
+                u_stop_randomizer: { value: new THREE.Vector3(0.6, 1.0, 0.8) },
+                u_texture: { value: null },
+                u_background_color: { value: new THREE.Vector3(backgroundColor.r, backgroundColor.g, backgroundColor.b) }
+            },
+            vertexShader: vertexText,
+            fragmentShader: fragText,
+            transparent: true
+        });
+        
+        basicMaterial = new THREE.MeshBasicMaterial({ transparent: true });
+        const bgColorMaterial = new THREE.MeshBasicMaterial({ color: backgroundColor, transparent: true });
+        const planeBasic = new THREE.Mesh(planeGeometry, basicMaterial);
+        const planeShader = new THREE.Mesh(planeGeometry, shaderMaterial);
+        const coloredPlane = new THREE.Mesh(planeGeometry, bgColorMaterial);
+        
+        shaderScene.add(planeShader);
+        mainScene.add(coloredPlane);
+        renderer.setRenderTarget(renderTargets[0]);
+        renderer.render(mainScene, camera);
+        mainScene.remove(coloredPlane);
+        mainScene.add(planeBasic);
+    }
+    
+    function resizeFlowerBox() {
+        if (!renderer) return;
+        const width = flowerCanvas.clientWidth;
+        const height = flowerCanvas.clientHeight;
+        renderer.setSize(width, height);
+        if (shaderMaterial) {
+            shaderMaterial.uniforms.u_ratio.value = width / height;
+            renderTargets[0].setSize(width, height);
+            renderTargets[1].setSize(width, height);
+        }
+    }
+    
+    function animateFlowers() {
+        if (!renderer || !shaderMaterial) return;
+        const delta = Math.min(clock.getDelta(), 0.033);
+        
+        if (isRendering) {
+            shaderMaterial.uniforms.u_texture.value = renderTargets[0].texture;
+            shaderMaterial.uniforms.u_time.value = clock.getElapsedTime() + 0.9;
+            
+            if (pointer.clicked) {
+                shaderMaterial.uniforms.u_point.value = new THREE.Vector2(pointer.x, 1.0 - pointer.y);
+                const randVec = new THREE.Vector3(Math.random(), Math.random(), Math.random());
+                shaderMaterial.uniforms.u_stop_randomizer.value = randVec;
+                if (isStart) {
+                    shaderMaterial.uniforms.u_stop_randomizer.value = new THREE.Vector3(0.5, 1.0, 1.0);
+                    isStart = false;
+                }
+                shaderMaterial.uniforms.u_stop_time.value = 0.0;
+                pointer.clicked = false;
+            }
+            shaderMaterial.uniforms.u_stop_time.value += delta;
+            
+            renderer.setRenderTarget(renderTargets[1]);
+            renderer.render(shaderScene, camera);
+            basicMaterial.map = renderTargets[1].texture;
+            renderer.setRenderTarget(null);
+            renderer.render(mainScene, camera);
+            
+            let temp = renderTargets[0];
+            renderTargets[0] = renderTargets[1];
+            renderTargets[1] = temp;
+        }
+        requestAnimationFrame(animateFlowers);
+    }
+    
+    function startAutoFlowers() {
+        if (flowerInterval) clearInterval(flowerInterval);
+        flowerInterval = setInterval(() => {
+            if (magicBox.style.display !== 'block') return;
+            const randomX = Math.random() * 0.8 + 0.1;
+            const randomY = Math.random() * 0.7 + 0.15;
+            pointer.x = randomX;
+            pointer.y = randomY;
+            pointer.clicked = true;
+            isRendering = true;
+        }, 380);
+    }
+    
+    function stopAutoFlowers() {
+        if (flowerInterval) {
+            clearInterval(flowerInterval);
+            flowerInterval = null;
+        }
+    }
+    
+    openBtn.addEventListener('click', () => {
+        if (!musicStarted) startMusic();
+        magicBox.style.display = 'block';
+        
+        if (!renderer) {
+            initFlowerBox();
+            resizeFlowerBox();
+            animateFlowers();
+            window.addEventListener('resize', () => {
+                if (magicBox.style.display === 'block') resizeFlowerBox();
+            });
+        } else {
+            resizeFlowerBox();
+        }
+        
+        startAutoFlowers();
+        setTimeout(() => {
+            for(let i = 0; i < 14; i++) {
+                setTimeout(() => {
+                    pointer.x = Math.random() * 0.8 + 0.1;
+                    pointer.y = Math.random() * 0.7 + 0.15;
+                    pointer.clicked = true;
+                }, i * 45);
+            }
+        }, 100);
+    });
+    
+    closeBoxBtn.addEventListener('click', () => {
+        magicBox.style.display = 'none';
+        stopAutoFlowers();
+    });
+    
+    if (flowerCanvas) {
+        flowerCanvas.addEventListener('click', (e) => {
+            if (magicBox.style.display !== 'block') return;
+            const rect = flowerCanvas.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width;
+            const y = (e.clientY - rect.top) / rect.height;
+            pointer.x = Math.min(0.95, Math.max(0.05, x));
+            pointer.y = Math.min(0.95, Math.max(0.05, y));
+            pointer.clicked = true;
+        });
+        flowerCanvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            if (magicBox.style.display !== 'block') return;
+            const rect = flowerCanvas.getBoundingClientRect();
+            const touch = e.touches[0];
+            const x = (touch.clientX - rect.left) / rect.width;
+            const y = (touch.clientY - rect.top) / rect.height;
+            pointer.x = Math.min(0.95, Math.max(0.05, x));
+            pointer.y = Math.min(0.95, Math.max(0.05, y));
+            pointer.clicked = true;
+        });
+    }
+    
+    const resizeObserver = new ResizeObserver(() => {
+        if (magicBox.style.display === 'block' && renderer) resizeFlowerBox();
+    });
+    if (flowerCanvas) resizeObserver.observe(flowerCanvas);
+</script>
+</body>
+</html>
